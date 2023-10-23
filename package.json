@@ -1,0 +1,13 @@
+{
+  "name": "medical-appointment",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "studio": "npx prisma studio",
+    "db-push": "npx prisma db push"
+  },
+  "author": "xabiib-ali",
+  "license": "ISC"
+}
