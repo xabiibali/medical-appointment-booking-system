@@ -15,7 +15,7 @@ model Doctor {
   phone          Int
   specialization String
   bio            String
-  schedule       Json
+  schedule       String[]
   hospital       String
   appointment    Appointment[]
 
