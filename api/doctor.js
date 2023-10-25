@@ -190,7 +190,7 @@ router.get("/:id", async (req, res) => {
     }
 
     return res.status(200).json({
-      message: " information doctor retrieved successfully",
+      message: "doctor information  retrieved successfully",
       doctor,
     });
   } catch (err) {
