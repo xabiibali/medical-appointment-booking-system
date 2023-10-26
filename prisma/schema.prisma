@@ -42,7 +42,6 @@ model Patient {
 model Appointment {
   id              Int      @id @default(autoincrement())
   appointmentDate DateTime
-  purpose         String
   duration        Int
   description     String
   doctorId        Int
@@ -59,7 +58,6 @@ model PatientHistory {
   patientId Int
   details   String
   Patient   Patient @relation(fields: [patientId], references: [id])
-
   created DateTime @default(now())
   updated DateTime @default(now())
 }
