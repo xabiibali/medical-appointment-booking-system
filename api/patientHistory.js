@@ -119,9 +119,8 @@ router.get("/", authenticate, async (req, res) => {
             }
         }
     });
-
-    res.status(200).json({ 
-        message: "PatientHistories retrieved",
+         res.status(200).json({ 
+         message: "PatientHistories retrieved",
          data: histories
          });
 
