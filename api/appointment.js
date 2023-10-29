@@ -93,4 +93,71 @@ router.delete("/:id", async (req, res) => {
 
 
 
+
+router.get("/:id", async (req, res) => {
+  const id  = parseInt(req.params.id);
+  
+try {
+
+   const appo = await prisma.appointment.findUnique({
+    where: { id: id },
+    include:{
+      Patient:{
+          select:{
+              firstName: true,
+              lastName: true,
+              email: true,
+              address: true,
+              phone: true,
+              age: true,
+          }
+      }
+    }
+  });
+
+  if (!appo) {
+    res.status(404).json({
+       error: "appointment not found"
+       });
+  } else {
+    res.status(200).json({ 
+      message: "appointment retreived",
+     data: appo 
+    });
+  }
+} catch (error) {
+  res.status(500).json({ error: "Error retrieving appointment" });
+}
+});
+
+
+router.get("/", async (req, res) => {
+  try {
+    const appo = await prisma.appointment.findMany({
+        include:{
+            Patient:{
+                select:{
+                    firstName: true,
+                    lastName: true,
+                    email: true,
+                    address: true,
+                    phone: true,
+                    age: true,
+                }
+            }
+        }
+    });
+         res.status(200).json({ 
+         message: "appointments retrieved",
+         data: appo
+         });
+
+  } catch (error) {
+    res.status(500).json({
+         error: "Error retrieving appointment" 
+        });
+  }
+});
+
+
 export default router
