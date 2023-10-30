@@ -66,6 +66,36 @@ Authenticate a doctor and obtain a JWT token.
 
 
 
+### Update Doctor Information
+
+**Endpoint:** `PUT /api/doctor/:id`
+
+**Authentication:** Requires a valid JWT token.
+
+##### Request Body
+
+| Parameter  | Type   | Required | Description                               |
+| ---------- | ------ | -------- | ----------------------------------------- |
+| `name`         | string   | Yes | Name of the Doctor    |
+| `email`        | string   | Yes | Email of the Doctor   |
+| `password`     | string   | Yes | Password for the Doct |
+| `phone`        | int      | Yes | phone of the Doctor   |
+|`specialization`| string   | Yes |  specialization       |
+| `bio,`         | strung   | Yes | bio of the Doctor     |
+| `schedule,`    | strung   | Yes | schedule of the Doctor|
+| `hospital,`    | strung   | Yes | hospital of the Doctor|
+
+##### Response
+
+```json
+{
+  "message": "doctor information updated successfully",
+  "doctor": Updated doctor data
+}
+```
+
+
+
 
 
 
