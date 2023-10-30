@@ -40,7 +40,29 @@ The Doctor API provides endpoints for managing doctor information in a medical s
 ```
 
 
+### Authentication
 
+#### dogtor Login
+
+Authenticate a doctor and obtain a JWT token.
+
+**Endpoint:** `POST /api/doctor/login`
+
+##### Request Body
+
+| Parameter  | Type   | Required | Description                          |
+| ---------- | ------ | -------- | ------------------------------------ |
+| `email`    | string | Yes      | Email of the doctor                  |
+| `password` | string | Yes      | Password for the doctor's account    |
+
+##### Response
+
+```json
+{
+  "message": "doctor logged in successfully",
+  "token": "<jwt_token>"
+}
+```
 
 
 
