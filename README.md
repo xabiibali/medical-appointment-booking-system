@@ -118,10 +118,11 @@ Retrieve information about a specific  Doctor.
 
 ##### Response
 
+
 ```json
 {
   "message": " Doctor information retrieved successfully",
-  "owner":  Doctor data
+  " Doctor":  Doctor data
 }
 ```
 
