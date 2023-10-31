@@ -127,6 +127,22 @@ Retrieve information about a specific  Doctor.
 ```
 
 
+### List  Doctors
+
+**Endpoint:** `GET /api/doctor`
+
+Retrieve a list of all Doctors.
+
+**Authentication:** No authentication required.
+
+##### Response
+
+```json
+{
+  "message": "Doctors list retrieved successfully",
+  "Doctors": [List of Doctors data]
+}
+```
 
 
 
