@@ -95,6 +95,40 @@ Authenticate a doctor and obtain a JWT token.
 ```
 
 
+### Doctor 
+
+**Endpoint:** `DELETE /api/doctor/:id`
+
+Delete a Doctor's account.
+
+**Authentication:** authentication required.
+
+##### Response
+
+- `200 OK`: Doctor deleted successfully
+- `404 Not Found`: Doctor was not found
+
+### Retrieve Doctor Information
+
+**Endpoint:** `GET /api/ doctorr/:id`
+
+Retrieve information about a specific  Doctor.
+
+**Authentication:** No authentication required.
+
+##### Response
+
+```json
+{
+  "message": " Doctor information retrieved successfully",
+  "owner":  Doctor data
+}
+```
+
+
+
+
+
 
 
 
