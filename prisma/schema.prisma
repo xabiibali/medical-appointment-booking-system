@@ -8,9 +8,9 @@ datasource db {
 }
 
 model Doctor {
-  id             Int           @id @default(autoincrement())
+  id             Int              @id @default(autoincrement())
   name           String
-  email          String        @unique
+  email          String           @unique
   password       String
   phone          Int
   specialization String
@@ -18,9 +18,9 @@ model Doctor {
   schedule       String[]
   hospital       String
   appointment    Appointment[]
-
-  created DateTime @default(now())
-  updated DateTime @default(now())
+  patientHistory PatientHistory[]
+  created        DateTime         @default(now())
+  updated        DateTime         @default(now())
 }
 
 model Patient {
@@ -57,7 +57,9 @@ model PatientHistory {
   treatment String
   patientId Int
   details   String
+  doctorId Int
   Patient   Patient @relation(fields: [patientId], references: [id])
-  created DateTime @default(now())
-  updated DateTime @default(now())
+  Doctor   Doctor  @relation(fields: [doctorId], references: [id])
+  created  DateTime @default(now())
+  updated  DateTime @default(now())
 }

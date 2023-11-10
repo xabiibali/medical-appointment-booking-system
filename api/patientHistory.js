@@ -1,15 +1,16 @@
 import express from "express";
 import prisma from "./lib/index.js";
-import authenticate from "./middleware/authentication.js";
+import {docterVerified} from "./middleware/authentication.js";
 const router = express.Router();
 
 // Create a new PatientHistory
-router.post("/", authenticate, async (req, res) => {
+router.post("/", docterVerified, async (req, res) => {
   try {
     const { treatment, patientId, details } = req.body;
+    const doctorId = req.doctor.id
 
     const newHistory = await prisma.patientHistory.create({
-      data: { treatment, patientId, details },
+      data: { treatment, patientId, details, doctorId },
     });
 
     res.status(201).json({ 
@@ -25,7 +26,7 @@ router.post("/", authenticate, async (req, res) => {
 });
 
 
-router.get("/:id", authenticate, async (req, res) => {
+router.get("/:id", docterVerified , async (req, res) => {
     const id  = parseInt(req.params.id);
     
   try {
@@ -59,13 +60,14 @@ router.get("/:id", authenticate, async (req, res) => {
 });
 
 // Update a PatientHistory by ID
-router.put("/:id", authenticate, async (req, res) => {
+router.put("/:id", docterVerified, async (req, res) => {
   try {
     const { id } = req.params;
+    const doctorId = req.doctor.id
     const { treatment, patientId, details } = req.body;
     const updatedHistory = await prisma.patientHistory.update({
       where: { id: Number(id) },
-      data: { treatment,patientId, details },
+      data: { treatment,patientId, details, doctorId },
 
     });
 
@@ -79,7 +81,7 @@ router.put("/:id", authenticate, async (req, res) => {
 });
 
 // Delete a PatientHistory by ID
-router.delete("/:id", authenticate, async (req, res) => {
+router.delete("/:id", docterVerified, async (req, res) => {
   try {
     const { id } = req.params;
     const deletedHistory = await prisma.patientHistory.delete({
@@ -103,7 +105,7 @@ router.delete("/:id", authenticate, async (req, res) => {
 });
 
 // List all PatientHistories
-router.get("/", authenticate, async (req, res) => {
+router.get("/", docterVerified, async (req, res) => {
   try {
     const histories = await prisma.patientHistory.findMany({
         include:{

@@ -1,13 +1,15 @@
 // 2023-07-26T09:30:00Z
 import express from "express";
 import prisma from "./lib/index.js";
-import authenticate from "./middleware/authentication.js";
+import {patientVerified} from "./middleware/authentication.js";
 
 const router = express.Router();
 
-router.post("/",  async (req, res) => {
-  const { appointmentDate, duration, description, doctorId, patientId } =
-    req.body;
+router.post("/", patientVerified, async (req, res) => {
+   
+  const { appointmentDate, duration, description, doctorId } = req.body;
+   const patientId = req.patient.id
+
   try {
     const newAppointment = await prisma.appointment.create({
       data: {
@@ -15,7 +17,7 @@ router.post("/",  async (req, res) => {
         duration: duration,
         description: description,
         doctorId: doctorId,
-        patientId: patientId,
+        patientId
       },
 
     });
@@ -34,9 +36,10 @@ router.post("/",  async (req, res) => {
 });
 
 
-router.put("/:id",  async (req, res) => {
+router.put("/:id", patientVerified, async (req, res) => {
     const id = parseInt(req.params.id)
-    const { appointmentDate, duration, description, doctorId, patientId } =
+  const patientId = req.patient.id
+    const { appointmentDate, duration, description, doctorId } =
       req.body;
     try {
       const updateAppointment = await prisma.appointment.update({
