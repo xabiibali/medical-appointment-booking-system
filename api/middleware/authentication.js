@@ -4,7 +4,8 @@ import 'dotenv/config';
 
 const SECRET_KEY = process.env.SECRET_KEY;
 
-function authenticate(req, res, next) {
+// doctor verified
+export function docterVerified(req, res, next) {
     const token = req.headers.authorization;
     console.log("TOKEN", token);
   
@@ -16,7 +17,7 @@ function authenticate(req, res, next) {
 
     const tokenWithoutBearer = token.split(' ')[1];
 
-    jwt.verify(tokenWithoutBearer, SECRET_KEY, (error, decoded) => {
+    jwt.verify(tokenWithoutBearer, SECRET_KEY, (error, doctor) => {
         if (error) {
             if (error) {
                 return res.status(401).json({
@@ -25,9 +26,37 @@ function authenticate(req, res, next) {
             } 
         }
 
-        req.decoded = decoded;
+        req.doctor = doctor;
         next();
     });
 }
 
-export default authenticate;
+
+
+
+// patient verified
+export function patientVerified(req, res, next) {
+    const token = req.headers.authorization;
+    console.log("TOKEN", token);
+  
+    if (!token) {
+        return res.status(401).json({
+            message: 'Authentication failed: No token provided'
+        });
+    }
+
+    const tokenWithoutBearer = token.split(' ')[1];
+
+    jwt.verify(tokenWithoutBearer, SECRET_KEY, (error, patient) => {
+        if (error) {
+            if (error) {
+                return res.status(401).json({
+                    message: 'Authentication failed Token'
+                });
+            } 
+        }
+
+        req.patient = patient;
+        next();
+    });
+}

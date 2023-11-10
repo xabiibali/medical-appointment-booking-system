@@ -3,7 +3,7 @@ import bcrypt from "bcrypt";
 import prisma from "./lib/index.js";
 import Jwt from "jsonwebtoken";
 import "dotenv/config";
-import authenticate from "./middleware/authentication.js";
+import {patientVerified} from "./middleware/authentication.js";
 const SECRET_KEY = process.env.SECRET_KEY;
 
 const router = express.Router();
@@ -76,7 +76,7 @@ router.post("/login", async (req, res) => {
     }
 
     const token = Jwt.sign(
-      { id: isexistingpatient.id, email: isexistingpatient.email },
+      { id: isexistingpatient.id },
       SECRET_KEY,
       { expiresIn: "2h" }
     );
@@ -92,8 +92,8 @@ router.post("/login", async (req, res) => {
   }
 });
 
-router.put("/:id", authenticate, async (req, res) => {
-  const patientId = parseInt(req.params.id);
+router.put("/update", patientVerified, async (req, res) => {
+  const patientId = req.patient.id
   const { firstName, lastName, email, password, address, phone, age } =
     req.body;
 
@@ -123,8 +123,8 @@ router.put("/:id", authenticate, async (req, res) => {
   }
 });
 
-router.delete("/:id", async (req, res) => {
-  const patientId = parseInt(req.params.id);
+router.delete("/delete", patientVerified, async (req, res) => {
+  const patientId = req.patient.id
 
   try {
     const deletepatient = await prisma.patient.delete({
@@ -148,8 +148,8 @@ router.delete("/:id", async (req, res) => {
   }
 });
 
-router.get("/:id", async (req, res) => {
-  const patientId = parseInt(req.params.id);
+router.get("/curent", patientVerified, async (req, res) => {
+  const patientId = req.patient.id;
 
   try {
     const patient = await prisma.patient.findUnique({
@@ -186,6 +186,7 @@ router.get("/", async (req, res) => {
   try {
     const patients = await prisma.patient.findMany({
       select: {
+        id: true,
         firstName: true,
         lastName: true,
         email: true,
